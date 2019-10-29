@@ -9,34 +9,36 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      
       body: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Hero(
-                  tag: 'LogoImage',
-                  child: Image(
-                      image: NetworkImage(
-                          'https://mclarencollege.in/images/icon.png'),
-                      fit: BoxFit.contain),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Login',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 36,
-                      color: Color(0xFF4790F1),
-                      fontFamily: 'Poppins'),
-                ),
-              ],
+            Flexible(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Hero(
+                    tag: 'LogoImage',
+                    child: Image(
+                        image: NetworkImage(
+                            'https://mclarencollege.in/images/icon.png'),
+                        fit: BoxFit.contain),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    'Login',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 36,
+                        color: Color(0xFF4790F1),
+                        fontFamily: 'Poppins'),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 20,
