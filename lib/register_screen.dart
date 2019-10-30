@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override
@@ -6,6 +8,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  String email;
+  String password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +60,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         hintText: 'elon@musk.com',
                         icon: Icon(Icons.email),
                         border: OutlineInputBorder()),
+                    onChanged: (newValue){
+                      email=newValue;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -68,6 +75,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         icon: Icon(Icons.lock),
                         hintText: 'spacexRocks',
                         border: OutlineInputBorder()),
+                    onChanged: (newValue){
+                      password= newValue;
+                    },
                   ),
                   SizedBox(
                     height: 20,
@@ -81,8 +91,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: TextStyle(color: Colors.white, fontSize: 21),
                     ),
                     color: Colors.purple,
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'register');
+                    onPressed: () async{
+                      try {
+                        AuthResult result = await
+                        FirebaseAuth.instance.createUserWithEmailAndPassword(
+                            email: email, password: password);
+                        if(result.user != null){
+                          Navigator.pushNamed(context, 'login');
+                        }
+
+                      }catch(e){
+                        print(e);
+                      }
                     },
                   ),
                 ],
