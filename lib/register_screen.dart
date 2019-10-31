@@ -97,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         FirebaseAuth.instance.createUserWithEmailAndPassword(
                             email: email, password: password);
                         if(result.user != null){
-                          Navigator.pushNamed(context, 'login');
+                          Navigator.pushReplacementNamed(context, 'login');
                         }
 
                       }catch(e){
