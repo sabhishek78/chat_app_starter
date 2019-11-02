@@ -12,18 +12,21 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+
   List<Widget> chatWidgets = [];
-  TextEditingController controller = TextEditingController();
+ TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
+
     controller.addListener(() => setState(() {}));
-    getMessagesStream();
+   getMessagesStream();
   }
 
   String currentUserEmail = '';
 
+/*
   void getMessages() async {
     QuerySnapshot collectionData =
         await Firestore.instance.collection('messages').getDocuments();
@@ -40,14 +43,15 @@ class _ChatScreenState extends State<ChatScreen> {
       ));
     }
     setState(() {});
-  }
+  }*/
 
   void getMessagesStream() async {
-    chatWidgets.clear();
+
     FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
     currentUserEmail = currentUser.email;
     await for (var snapshot
-        in Firestore.instance.collection('messages').snapshots()) {
+        in Firestore.instance.collection('McLarenChat').snapshots()) {
+      chatWidgets.clear();
       for (var message in snapshot.documents) {
         String text = message.data['text'];
         String sender = message.data['sender'];
@@ -57,6 +61,7 @@ class _ChatScreenState extends State<ChatScreen> {
           isUser: sender == currentUserEmail,
         ));
       }
+      setState(() {});
     }
   }
 
@@ -74,59 +79,80 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           actions: <Widget>[
+
             IconButton(
+              icon: Icon(Icons.cloud_download),
+              onPressed: getMessagesStream,
+            ), IconButton(
               icon: Icon(Icons.exit_to_app),
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
                 Navigator.pushReplacementNamed(context, '/');
               },
             ),
-            IconButton(
-              icon: Icon(Icons.cloud_download),
-              onPressed: getMessages,
-            ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
+        body:  Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: chatWidgets,
-                ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: controller,
-                      maxLines: 1,
-                      textAlign: TextAlign.left,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: chatWidgets,
                     ),
                   ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.send,
+                )
+
+
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          controller: controller,
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+
+                        ),
+                      ),
                     ),
-                    color: Colors.blue,
-                    onPressed: controller.text.isEmpty ? null : sendMessage,
-                  )
-                ],
+                    IconButton(
+                      icon: Icon(
+                        Icons.send,
+                      ),
+                      color: Colors.blue,
+                      onPressed: controller.text.isEmpty ? null :sendmessage,
+
+
+                    )
+                  ],
+                ),
               )
             ],
           ),
-        ));
+        );
+
   }
 
-  void sendMessage() async {
-    await Firestore.instance.collection('messages').add(
-        {'sender': 'abhishekshrivastava78@gmail.com', 'text': controller.text});
+  Future sendmessage() async {
+    await Firestore.instance.collection('McLarenChat').add({
+      'sender': currentUserEmail,
+
+      'text':controller.text,
+    });
     controller.clear();
-    print("Message sent");
   }
+
+
 }
