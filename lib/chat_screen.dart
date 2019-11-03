@@ -1,11 +1,9 @@
 import 'package:chat_app_starter/chat_bubble.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'main.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+String currentUserEmail='';
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -13,39 +11,22 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
 
-  List<Widget> chatWidgets = [];
+  //List<Widget> chatWidgets = [];
  TextEditingController controller = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-
     controller.addListener(() => setState(() {}));
-   getMessagesStream();
+    currentUserEmail=FirebaseAuth.instance.currentUser().toString();
+
   }
 
-  String currentUserEmail = '';
 
-/*
-  void getMessages() async {
-    QuerySnapshot collectionData =
-        await Firestore.instance.collection('messages').getDocuments();
-    chatWidgets.clear();
-    FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
-    currentUserEmail = currentUser.email;
-    for (DocumentSnapshot message in collectionData.documents) {
-      String text = message.data['text'];
-      String sender = message.data['sender'];
-      chatWidgets.add(ChatBubble(
-        text: text,
-        sender: sender,
-        isUser: sender == currentUserEmail,
-      ));
-    }
-    setState(() {});
-  }*/
 
-  void getMessagesStream() async {
+
+
+ /* void getMessagesStream() async {
 
     FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
     currentUserEmail = currentUser.email;
@@ -63,8 +44,8 @@ class _ChatScreenState extends State<ChatScreen> {
       }
       setState(() {});
     }
-  }
-
+  }*/
+String currentUserEmail='';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,17 +54,18 @@ class _ChatScreenState extends State<ChatScreen> {
           title: Text(
             'McLaren Chat',
             style: TextStyle(
-              fontSize: 32,
+              fontSize: 20,
               color: Colors.white,
               fontFamily: 'OldLondon',
             ),
           ),
           actions: <Widget>[
 
-            IconButton(
+           /* IconButton(
               icon: Icon(Icons.cloud_download),
               onPressed: getMessagesStream,
-            ), IconButton(
+            ), */
+            IconButton(
               icon: Icon(Icons.exit_to_app),
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
@@ -98,12 +80,34 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: chatWidgets,
-                    ),
-                  ),
+                  child: StreamBuilder(
+                    stream: Firestore.instance.collection('messages').snapshots(),
+                    builder: (context,snapshot){
+                      if(!snapshot.hasData){
+                        return CircularProgressIndicator();
+
+                      }
+                      return ListView.builder(itemBuilder: (context, index) {
+                          return ChatBubble(
+                            text: snapshot.data.documents[index].data['text'],
+                            sender:  snapshot.data.documents[index].data['sender'],
+
+                            isUser: snapshot.data.documents[index].data['sender'] ==currentUserEmail,
+                          );
+                        },itemCount: snapshot.data.documents.length,shrinkWrap: true,
+                      );
+                    },
+                  )
+
+
+
+
+                 // SingleChildScrollView(
+                 //   child: Column(
+                 //     mainAxisSize: MainAxisSize.min,
+                //      children: chatWidgets,
+                 //   ),
+               //   ),
                 )
 
 
@@ -146,7 +150,9 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future sendmessage() async {
-    await Firestore.instance.collection('McLarenChat').add({
+
+
+    await Firestore.instance.collection('messages').add({
       'sender': currentUserEmail,
 
       'text':controller.text,

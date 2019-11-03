@@ -4,8 +4,7 @@ class ChatBubble extends StatelessWidget {
   String sender;
   ShapeBorder shape;
   bool isUser=false;
-  ChatBubble({this.text,
-  this.sender,this.shape,this.isUser});
+  ChatBubble({this.text, this.sender,this.shape,this.isUser});
   ShapeBorder shapeMe= RoundedRectangleBorder(
     borderRadius: BorderRadius.only(
       bottomLeft: Radius.circular(15.0),

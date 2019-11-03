@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         AuthResult result = await FirebaseAuth.instance.signInWithEmailAndPassword(
                             email: email, password: password);
                         if(result.user != null){
-                          Navigator.pushReplacementNamed(context, 'chat');
+                          Navigator.pushReplacementNamed(context, 'joinchatroom');
                           print("User Logged In!");
                         }
 

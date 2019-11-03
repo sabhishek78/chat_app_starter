@@ -1,8 +1,11 @@
+import 'package:chat_app_starter/chatroom_screen.dart';
 import 'package:chat_app_starter/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'chat_screen.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'chat_room_list.dart';
+import 'chatroom_screen.dart';
+
 
 void main() {
   runApp(
@@ -13,7 +16,8 @@ void main() {
         'login': (context) => LoginScreen(),
         'register': (context) => RegisterScreen(),
         'chat':(context)=> ChatScreen(),
-//        '/chat': (context) => ChatScreen(),
+        'joinchatroom':(context)=>ChatRoomScreen(),
+        'chatroomlist':(context)=>ChatRoomList(),
       },
     ),
   );
