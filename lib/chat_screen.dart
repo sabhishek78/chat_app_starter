@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 String currentUserEmail='';
 class ChatScreen extends StatefulWidget {
+  final String chatroomId;
+  ChatScreen({this.chatroomId});
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -18,10 +20,14 @@ class _ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     controller.addListener(() => setState(() {}));
-    currentUserEmail=FirebaseAuth.instance.currentUser().toString();
+    getUser();
+    //currentUserEmail=FirebaseAuth.instance.currentUser().toString();
 
   }
-
+ void getUser()async{
+   FirebaseUser currentUser = await FirebaseAuth.instance.currentUser();
+   currentUserEmail = currentUser.email;
+ }
 
 
 
@@ -52,7 +58,7 @@ String currentUserEmail='';
         appBar: AppBar(
           backgroundColor: Colors.blue,
           title: Text(
-            'McLaren Chat',
+            'chatroom ${widget.chatroomId}',
             style: TextStyle(
               fontSize: 20,
               color: Colors.white,
@@ -81,7 +87,7 @@ String currentUserEmail='';
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: StreamBuilder(
-                    stream: Firestore.instance.collection('messages').snapshots(),
+                    stream: Firestore.instance.collection('chatrooms').document(widget.chatroomId).collection('messages').snapshots(),
                     builder: (context,snapshot){
                       if(!snapshot.hasData){
                         return CircularProgressIndicator();
@@ -151,9 +157,7 @@ String currentUserEmail='';
 
   Future sendmessage() async {
 
-
-    await Firestore.instance.collection('messages').add({
-      'sender': currentUserEmail,
+    await Firestore.instance.collection('chatrooms').document(widget.chatroomId).collection('messages').add({'sender': currentUserEmail,
 
       'text':controller.text,
     });
