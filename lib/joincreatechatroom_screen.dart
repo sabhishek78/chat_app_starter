@@ -25,6 +25,7 @@ class _JoinCreateChatRoomScreenState extends State<JoinCreateChatRoomScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 10,),
             RaisedButton(
               padding: EdgeInsets.all(16),
               shape: RoundedRectangleBorder(
@@ -43,7 +44,8 @@ class _JoinCreateChatRoomScreenState extends State<JoinCreateChatRoomScreen> {
 
             Expanded(
                 child:  Container(
-                  child: StreamBuilder(
+                  color: Colors.lightBlueAccent,
+                  child: StreamBuilder<QuerySnapshot>(
                     stream: Firestore.instance.collection('chatrooms').snapshots(),
                     builder: (context, snapshot) {
                       if (!snapshot.hasData) {
@@ -54,7 +56,10 @@ class _JoinCreateChatRoomScreenState extends State<JoinCreateChatRoomScreen> {
                         return ListView.builder(
                           scrollDirection: Axis.vertical,
                           padding: EdgeInsets.all(10.0),
-                          itemBuilder: (context, index) => ListTile(title: Text('${snapshot.data.documents[index]}')),
+                          itemBuilder: (context, index) => ListTile(
+                              leading: const Icon(Icons.chat),
+                              title: Text('${snapshot.data.documents[index].documentID}')
+                          ),
 
                           itemCount: snapshot.data.documents.length,
                         );
@@ -63,12 +68,14 @@ class _JoinCreateChatRoomScreenState extends State<JoinCreateChatRoomScreen> {
                   ),
                 ),
             ),
+            SizedBox(height: 10,),
         TextField(
           decoration: InputDecoration(
-              border: InputBorder.none,
+              border: OutlineInputBorder(),
               hintText: 'Enter chatroom Id'
           ),
           keyboardType: TextInputType.number,
+          maxLength: 4,
           onChanged: (text) {
             chatroomId = text;
           },

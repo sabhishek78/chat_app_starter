@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -101,8 +102,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           print("User Logged In!");
                         }
 
-                      }catch(e){
-                        print(e);
+                      }on Exception catch (e) {
+                        Alert(
+                            context: context,
+                            title: "Invalid Login",
+                            desc: "Please Check Your Login Information")
+                            .show();
                       }
                     },
                   ),
