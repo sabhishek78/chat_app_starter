@@ -1,10 +1,10 @@
-import 'package:chat_app_starter/chatroom_screen.dart';
+import 'package:chat_app_starter/joincreatechatroom_screen.dart';
 import 'package:chat_app_starter/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
 import 'chat_screen.dart';
-import 'chat_room_list.dart';
-import 'chatroom_screen.dart';
+
+import 'joincreatechatroom_screen.dart';
 
 
 void main() {
@@ -16,8 +16,8 @@ void main() {
         'login': (context) => LoginScreen(),
         'register': (context) => RegisterScreen(),
         'chat':(context)=> ChatScreen(),
-        'joinchatroom':(context)=>ChatRoomScreen(),
-        'chatroomlist':(context)=>ChatRoomList(),
+        'joinchatroom':(context)=>JoinCreateChatRoomScreen(),
+
       },
     ),
   );
