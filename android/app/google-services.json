@@ -1,63 +1,34 @@
 {
   "project_info": {
-    "project_number": "173526209871",
-    "firebase_url": "https://chatting-54b2e.firebaseio.com",
-    "project_id": "chatting-54b2e",
-    "storage_bucket": "chatting-54b2e.appspot.com"
+    "project_number": "911711614826",
+    "firebase_url": "https://abhishek-chat-app.firebaseio.com",
+    "project_id": "abhishek-chat-app",
+    "storage_bucket": "abhishek-chat-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:173526209871:android:c5ef5b1a04a4aa94d1613a",
+        "mobilesdk_app_id": "1:911711614826:android:1629024c821fe4708c5713",
         "android_client_info": {
-          "package_name": "com.android.application"
+          "package_name": "com.abhishek.chatapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "173526209871-n6ab8h1n70r7har8aghnisbsa36177ku.apps.googleusercontent.com",
+          "client_id": "911711614826-b9j55572seile77quida61ltb9vgu60s.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD0nEHEYEdR8yxpZZVvRc-1g9zqH8NpQxE"
+          "current_key": "AIzaSyAfUBICrVmHsmdQet4vKpz1I-ySt6nlxDc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "173526209871-n6ab8h1n70r7har8aghnisbsa36177ku.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:173526209871:android:54ba0504332e0b88d1613a",
-        "android_client_info": {
-          "package_name": "com.mclarencollege.chat_app_starter"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "173526209871-n6ab8h1n70r7har8aghnisbsa36177ku.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyD0nEHEYEdR8yxpZZVvRc-1g9zqH8NpQxE"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "173526209871-n6ab8h1n70r7har8aghnisbsa36177ku.apps.googleusercontent.com",
+              "client_id": "911711614826-b9j55572seile77quida61ltb9vgu60s.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

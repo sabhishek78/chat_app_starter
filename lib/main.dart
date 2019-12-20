@@ -12,7 +12,8 @@ void main() {
     MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => WelcomeScreen(),
+        '/': (context) =>JoinCreateChatRoomScreen(),
+      //  '/': (context) => WelcomeScreen(),
         'login': (context) => LoginScreen(),
         'register': (context) => RegisterScreen(),
         'chat':(context)=> ChatScreen(),
