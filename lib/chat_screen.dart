@@ -16,12 +16,20 @@ class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
+class Wrapper{
+  bool buttonDisabled;
+  Wrapper(this.buttonDisabled);
+  void alter(Wrapper object){
+    object.buttonDisabled=!object.buttonDisabled;
+  }
+}
 
 class _ChatScreenState extends State<ChatScreen> {
-  //List<Widget> chatWidgets = [];
+
   String currentUserEmail = '';
   bool _isVisible=false;
 
+  Wrapper button=Wrapper(false);
   TextEditingController controller = TextEditingController();
 
   @override
@@ -29,7 +37,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     super.initState();
     controller.addListener(() {
-      //print(controller.value);
+
       setState(() {});
     });
     getUser();
@@ -153,14 +161,16 @@ class _ChatScreenState extends State<ChatScreen> {
                     Icons.send,
                   ),
                   color: Colors.blue,
-                  onPressed: controller.text.isEmpty ? null : sendmessage,
+
+                  onPressed: controller.text.isEmpty || button.buttonDisabled ? null : sendmessage,
+
                 )
               ],
             ),
           ),
           Visibility(
             visible: _isVisible,
-            child: CheckBox(controller: controller),
+            child: CheckBox(controller: controller,button:button),
           )
         ],
       ),
